@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Recognition</title>
+</head>
+<body>
+    <h1>Iris Recognition</h1>
+
+    <form action="/" enctype="multipart/form-data" method="post">
+        <input type="file" name="file" accept="image/*" required>
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if image_path %}
+        <h2>Uploaded Image</h2>
+        <img src="{{ url_for('static', filename='uploads/' + image_path) }}" alt="Uploaded Image" style="max-width: 100%; height: auto;">
+    {% endif %}
+
+    {% if outer_iris or inner_iris %}
+        <h2>Detected Iris Information</h2>
+
+        {% if outer_iris %}
+            <h3>Outer Iris</h3>
+            <p>Center: ({{ outer_iris['center_x'] }}, {{ outer_iris['center_y'] }})</p>
+            <p>Major Axis: {{ outer_iris['major_axis'] }}</p>
+            <p>Minor Axis: {{ outer_iris['minor_axis'] }}</p>
+            <p>Angle: {{ outer_iris['angle'] }}</p>
+        {% endif %}
+
+        {% if inner_iris %}
+            <h3>Inner Iris</h3>
+            <p>Center: ({{ inner_iris['center_x'] }}, {{ inner_iris['center_y'] }})</p>
+            <p>Radius: {{ inner_iris['radius'] }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
